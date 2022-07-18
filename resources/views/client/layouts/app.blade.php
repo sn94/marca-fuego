@@ -23,7 +23,7 @@
    <!-- bootstrap css -->
    <link rel="stylesheet" href="{{asset('main_web_template/css/bootstrap.min.css')}}">
    <!-- style css -->
-   <link rel="stylesheet" href="{{asset('main_web_template/css/style.css')}}">
+   <link rel="stylesheet" href="{{asset('main_web_template/css/style.css') . '?v=' . date('His')}}">
    <!-- Responsive-->
    <link rel="stylesheet" href="{{asset('main_web_template/css/responsive.css')}}">
    <!-- fevicon -->
@@ -103,6 +103,23 @@
    <!-- end header inner -->
    <!-- end header -->
    <!-- banner -->
+   @if (session()->has('success'))
+				<div class="alert alert-info" role="alert">
+
+					@foreach (explode("\n", session('success')) as $msg )
+					<h3> {{ $msg }}</h3>
+					@endforeach
+				</div>
+				@endif
+
+
+				@if (session()->has('error'))
+				<div class="alert alert-danger" role="alert">
+					<h3>{{ session('error')}}</h3>
+				</div>
+				@endif
+
+            
    @yield('content')
  
    <!--  footer -->

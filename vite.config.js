@@ -13,10 +13,7 @@ export default defineConfig({
             'resources/js/dropzone.js',
 
 
-
-
-            'resources/css/videojs.css',
-            'resources/js/videojs.js',
+ 
         ]),
     ],
 });

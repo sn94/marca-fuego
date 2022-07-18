@@ -16,12 +16,17 @@
  
 
 
+ 
+ 
+	 
+	{{ $lots->links(  ) }}
+
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th></th>
-			<th>CODIGO</th>
-			<th>FOTO</th>
+			 
+			 
+			<th> </th>
 			<th>TITULO</th>
 			<th>ZONA</th>
 			<th>PRECIO</th>
@@ -36,25 +41,23 @@
 
 
 		<tr>
-			<td>
+			 
 
-				<a class="btn btn-primary btn-sm" href="{{route('lotes').'/editar/' . $ca->id  }}">
-					<i class="align-middle" data-feather="edit-2"></i>
-				</a>
-				<a class="btn btn-primary btn-sm" href="{{route('lotes').'/borrar/' . $ca->id  }}">
-					<i class="align-middle" data-feather="trash"></i>
-				</a>
-			</td>
-
-			<td>{{$ca->id}}</td>
-
-
+			 
 			<td>
 				@if ($ca->front_photo_url)
 				<img src="{{ $ca->front_photo_url }}" style="width:200px; height:auto;" alt="">
 				@else <img src="{{ asset('image/logo.png') }}" style="width:200px; height:auto;opacity: .2;" alt="">
 
 				@endif
+			<div class="mt-1">
+			<a class="btn btn-primary btn-sm" href="{{route('lotes').'/editar/' . $ca->id  }}">
+					<i class="align-middle" data-feather="edit-2"></i>
+				</a>
+				<a class="btn btn-primary btn-sm" href="{{route('lotes').'/borrar/' . $ca->id  }}">
+					<i class="align-middle" data-feather="trash"></i>
+				</a>
+			</div>
 			</td>
 
 			<td>{{$ca->title}}</td>

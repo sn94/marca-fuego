@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('double_mark')->nullable();
             $table->string('quantity')->nullable();
             $table->string('price')->nullable();
-            $table->string('vat_on_price')->nullable(); //iva
+          
             $table->string('comission')->nullable();
-            $table->string('vat_on_comission')->nullable(); //iva
+           
 
             $table->unsignedBigInteger('category_id')->nullable(); 
            // $table->foreign('category_id')->references('id')->on('categories');

@@ -2,8 +2,7 @@
 
 @push('css')
 
-@vite([ 'resources/css/videojs.css'])
-
+ 
 
 <style>
     .detail-label {
@@ -20,9 +19,7 @@
 
 @push('js')
 
-
-
-@vite([ 'resources/js/videojs.js'])
+ 
 
 <script>
     function showDetails(   containerInfoId) {

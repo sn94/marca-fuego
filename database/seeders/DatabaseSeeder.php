@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\HomeGallery;
 use App\Models\Lote;
 use App\Models\User;
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
             Category::create($c);
         // \App\Models\User::factory(10)->create();
 
+   
 
 
         //lote
@@ -49,10 +51,16 @@ class DatabaseSeeder extends Seeder
         );
 
 
+        Contact::factory( 50 )->create();
+        Lote::factory(30)->create();
+
+
         User::factory()->create([
             'name' => 'sonia',
             'email' => 'stoledo@upload.com.py',
-            'password' => Hash::make('123')
+            'password' => Hash::make('123'),
+
+            'role' => 'admin'
         ]);
     }
 }

@@ -1,4 +1,4 @@
-<header>
+<header id="header">
       <!-- header inner -->
       <div class="header">
          <div class="container-fluid">
@@ -32,7 +32,7 @@
                               <a class="nav-link" href="blog.html">Novedades</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="{{ route('client.contact_us')}}">Contacto</a>
+                              <a class="nav-link" href="#CONTACT-FORM">Contacto</a>
 
                            </li>
 

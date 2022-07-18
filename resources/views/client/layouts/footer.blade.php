@@ -40,10 +40,11 @@
                   </ul>
                </div>
                <div class="col-md-3">
-                  <form class="bottom_form">
+                  <form class="bottom_form"  action="{{route('client.subscription')}}" method="POST">
+                     @csrf
                      <h3>Informativo</h3>
-                     <input class="enter" placeholder="Ingrese su correo" type="text" name="Enter your email">
-                     <button class="sub_btn">Suscribirse</button>
+                     <input class="enter" placeholder="Ingrese su correo" type="text" name="email">
+                     <button class="mainbutton " >Suscribirse</button>
                   </form>
                </div>
             </div>
