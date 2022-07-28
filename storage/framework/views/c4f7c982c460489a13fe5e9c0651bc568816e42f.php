@@ -1,0 +1,2 @@
+<img src="<?php echo e($message->embed( public_path('image/logo.png') )); ?>">
+<?php echo e(json_encode( $subscriptor   )); ?><?php /**PATH C:\xampp\htdocs\marca-fuego\resources\views/emails/notify_new_subscriptor.blade.php ENDPATH**/ ?>
