@@ -10,6 +10,8 @@ use App\Models\Category;
 use App\Models\Lote;
 use App\Models\Subscriptor;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +48,11 @@ Route::get('/nosotros', function (Category $category) {
   return view('client.pages.nosotros');
 })->name('client.us');
 
+Route::get('/novedades', function (Category $category) {
+
+  return view('client.pages.novedades');
+})->name('client.news');
+
 Route::prefix('contactanos')->group(function () {
 
   // Route::get('/', [ ContactsController::class, 'create'])->name('client.contact_us');
@@ -66,11 +73,37 @@ Route::get('/test', function () {
 
 
 
+Route::prefix('perfil')->middleware(['auth'])->group(function () {
+
+  Route::get('/', function () {
+    return view('admin.users.profile');
+  })->name('perfil');
+
+  Route::post('/', function (Request $request) {
+
+    $request->validate( [
+      'email'=>'required|email',
+      'name'=> 'required|max:255',
+      'password'=>'required_with:change_password|confirmed'
+    ]) ;
+
+    $user = request()->user();
+
+    $data =   ['email' =>  $request->email, 'name' =>  $request->name];
+    if ($request->has('change_password')) {
+      $data['[password'] =  Hash::make($request->password);
+    }
+    $user->fill($data);
+  });
+});
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
   Route::get('/dashboard', function () {
-    return view('admin.welcome');
+
+    $lots= Lote::count();
+    $categories = Category::count();
+    return view('admin.welcome', compact('lots', 'categories'));
   })->name('dashboard');
 
 

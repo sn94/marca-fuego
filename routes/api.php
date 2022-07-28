@@ -22,5 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('videos/{lot}', function( Lote $lot){
 
-    return [ [   'name'=> $lot->video, 'id'=>$lot->id, 'video_url' => $lot->video_url ]];
+    if(  $lot->video_url)
+    return [ [   'name'=> $lot->video, 'id'=>$lot->id, 'video_url' => $lot->video_url , 'thumbnail' => asset('image/video_icon.png') ]];
+    else return [];
 });

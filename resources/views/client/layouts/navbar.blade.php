@@ -29,7 +29,7 @@
                               <a class="nav-link" href="{{ url('categorias')}}">Lotes </a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="blog.html">Novedades</a>
+                              <a class="nav-link" href="{{route('client.news')}}">Novedades</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" href="#CONTACT-FORM">Contacto</a>

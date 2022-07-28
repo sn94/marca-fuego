@@ -32,11 +32,11 @@
                <div class="col-md-3 border_right">
                   <h3>Menu</h3>
                   <ul class="link">
-                     <li><a href="index.html">Inicio</a></li>
-                     <li><a href="about.html">Nosotros</a></li>
-                     <li><a href="products.html">Productos</a></li>
-                     <li><a href="blog.html">Novedades</a></li>
-                     <li><a href="contact.html">Contacto</a></li>
+                     <li><a href="{{ route('home')}}">Inicio</a></li>
+                     <li><a href="{{ route('client.us')}}">Nosotros</a></li>
+                     <li><a href="{{route('client.categorias')}}">Productos</a></li>
+                     <li><a href="{{route('client.news')}}">Novedades</a></li>
+                     <li><a href="{{route('home') .'#CONTACT-FORM'}}">Contacto</a></li>
                   </ul>
                </div>
                <div class="col-md-3">
