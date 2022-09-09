@@ -8,20 +8,32 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: auto;
+            min-height: 100vh;
+            object-fit: cover;
             z-index: -1;
         }
         .min-h-screen {
  position: relative;
  z-index: 1 !important;
- background: #C68960A6 !important;
+ background:#E07605A6 !important;
 }
 
+@media only screen and (max-width: 600px) {
+    div.w-full{
+        background: #FFFFFF85 !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    div.w-fulld{
+        background: #080807 !important;
+    }
+}
     </style>
 
     @endpush
     <img class="backdrop" src="{{asset('image/wallpaper.jpg')}}" alt="">
-    <x-auth-card style="background: #080807;">
+    <x-auth-card  >
 
 
         <!-- Session Status -->
@@ -30,7 +42,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" autocomplete="off">
 
 
             <x-slot name="logo">

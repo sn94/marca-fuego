@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\NotifyNewContact as ActionsNotifyNewContact;
+use App\Actions\NotifyNewSubscriptor as ActionsNotifyNewSubscriptor;
 use App\Http\Requests\ContactRequest;
 use App\Mail\NotifyNewContact;
 use App\Mail\NotifyNewSubscriptor;
 use App\Models\Contact;
 use App\Models\Subscriptor;
 use App\Models\User;
+use App\Notifications\NewSubscriptorNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -52,28 +55,63 @@ class ContactsController extends Controller
         return redirect(route('contactos'))->with('success', '¡HAS AGREGADO UN CONTACTO NUEVO!');
     }
 
-    public function register(ContactRequest $request)
+
+    public function create_public()
     {
 
+        return view('client.pages.PrimerContacto.Welcome_desktop');
+    }
 
+    public function register(ContactRequest $request)
+    {
+        $contact = Contact::where('email', $request->email)->first();
+ 
+        if ($request->switch == 'registered') {
 
-        $newcontact =   Contact::create($request->input());
+          
+            if ( ! $contact)
+            return redirect()->route('hello')->with('error', 'ESTE EMAIL AUN NO HA SIDO REGISTRADO');
+             else {  
+                if ($request->has('subscription')) {
 
-
-        //send email
-
-        $admins  =    User::where('role', 'admin')->get();
-        foreach ($admins  as  $adminuser) {
-            try {
-                Mail::to($adminuser)->send(new NotifyNewContact($newcontact));
-            } catch (Exception  $e) {
-                //No se pudo enviar
-                Log::debug($e->getMessage());
+                
+                    $data = [
+                        'email' => $request->email,
+                        'contact_id' =>  optional($contact)->id
+                    ];
+    
+                    $newsubscriptor =   Subscriptor::create($data);
+    
+                    new  ActionsNotifyNewSubscriptor($newsubscriptor);
+                 
+                } 
+                return redirect(route('home')  )->with('success', '¡Hola '.( $contact->fullname) .'!');
+                
             }
+
+          
+        } else {
+            $newcontact =   Contact::create($request->input());
+            //send email
+
+            new ActionsNotifyNewContact($newcontact);
         }
+
+        $request->session()->put('guest_email', $request->email);
 
         return redirect(route('home') . '#header')->with('success', '¡GRACIAS POR TU INTERÉS!');
     }
 
-   
+
+
+
+
+    public function showFormDeRegistrado()
+    {
+        return view('client.pages.PrimerContacto.RegistradoForm');
+    }
+    public function showFormDeNoRegistrado()
+    {
+        return view('client.pages.PrimerContacto.NoRegistradoForm');
+    }
 }

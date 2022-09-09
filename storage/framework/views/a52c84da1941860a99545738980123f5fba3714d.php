@@ -16,28 +16,40 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: auto;
+            min-height: 100vh;
+            object-fit: cover;
             z-index: -1;
         }
         .min-h-screen {
  position: relative;
  z-index: 1 !important;
- background: #C68960A6 !important;
+ background:#E07605A6 !important;
 }
 
+@media  only screen and (max-width: 600px) {
+    div.w-full{
+        background: #FFFFFF85 !important;
+    }
+}
+
+@media  only screen and (min-width: 768px) {
+    div.w-fulld{
+        background: #080807 !important;
+    }
+}
     </style>
 
     <?php $__env->stopPush(); ?>
     <img class="backdrop" src="<?php echo e(asset('image/wallpaper.jpg')); ?>" alt="">
     <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.auth-card','data' => ['style' => 'background: #080807;']] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.auth-card','data' => []] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('auth-card'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['style' => 'background: #080807;']); ?>
+<?php $component->withAttributes([]); ?>
 
 
         <!-- Session Status -->
@@ -74,7 +86,7 @@
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
 
-        <form method="POST" action="<?php echo e(route('login')); ?>">
+        <form method="POST" action="<?php echo e(route('login')); ?>" autocomplete="off">
 
 
              <?php $__env->slot('logo', null, []); ?> 

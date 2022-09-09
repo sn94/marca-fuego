@@ -23,6 +23,12 @@ class ContactRequest extends FormRequest
      */
     public function rules()
     {
+
+        if(  $this->switch == 'registered'     )
+        return    [ 
+            'email' => 'required_without:phone|email', 
+        ];
+        else
         return [
             'fullname' => 'required|string|max:255',
             'phone' => 'required_without:email|max:255',

@@ -2,8 +2,7 @@
 
 <?php $__env->slot('header'); ?>
 <?php $__env->startComponent('mail::header', ['url' => config('app.url')]); ?>
-<?php echo e(config('app.name')); ?>
-
+ 
 <?php echo $__env->renderComponent(); ?>
 <?php $__env->endSlot(); ?>
 

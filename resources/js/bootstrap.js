@@ -17,6 +17,10 @@ window.Dropzone = Dropzone
 import Jquery from 'jquery';
 window.$ = Jquery
 
+
+
+
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

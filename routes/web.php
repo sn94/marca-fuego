@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\NotifyNewContact;
+use App\Actions\NotifyNewSubscriptor as ActionsNotifyNewSubscriptor;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\LotsController;
@@ -7,10 +9,12 @@ use App\Http\Controllers\SubscriptorsController;
 use App\Http\Controllers\VideoUploadController;
 use App\Mail\NotifyNewSubscriptor;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Lote;
 use App\Models\Subscriptor;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -28,46 +32,76 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  $categories =  Category::get();
-  return view('client.index', compact('categories'));
-})->name('home');
 
-Route::get('/categorias', function () {
-  $categories = Category::get();
-  return view('client.pages.categories', compact('categories'));
-})->name('client.categorias');
+  
+  return view('client.pages.PrimerContacto.Welcome_desktop');
+})->name('hello');
 
 
-Route::get('/categorias/{category}', function (Category $category) {
-  $lotes = $category->lots;
-  return view('client.lots_by_category', compact('lotes', 'category'));
+
+Route::get('/formulario-contacto-reg', [ ContactsController::class, 'showFormDeRegistrado'])->name('client.form_contact_registrado');
+Route::get('/formulario-contacto-noreg', [ ContactsController::class, 'showFormDeNoRegistrado'])->name('client.form_contact_noregistrado');
+
+
+##guest control init
+Route::middleware('registered_guest')->group(function(){
+
+
+
+  Route::get('/home', function () {
+    $categories =  Category::get();
+    return view('client.index', compact('categories'));
+  })->name('home');
+  
+  Route::get('/categorias', function () {
+    $categories = Category::get();
+    return view('client.pages.categories', compact('categories'));
+  })->name('client.categorias');
+  
+  
+  Route::get('/categorias/{category}', function (Category $category) {
+    $lotes = $category->lots->filter(
+      function ($lot) {
+        return $lot->video_url || $lot->front_photo_url;
+      }
+    );
+    return view('client.lots_by_category', compact('lotes', 'category'));
+  });
+  
+  Route::get('/nosotros', function (Category $category) {
+  
+    return view('client.pages.nosotros');
+  })->name('client.us');
+  
+  Route::get('/novedades', function (Category $category) {
+  
+    return view('client.pages.novedades');
+  })->name('client.news');
+  
 });
 
-Route::get('/nosotros', function (Category $category) {
 
-  return view('client.pages.nosotros');
-})->name('client.us');
 
-Route::get('/novedades', function (Category $category) {
+##  control guest registrado
 
-  return view('client.pages.novedades');
-})->name('client.news');
+
 
 Route::prefix('contactanos')->group(function () {
 
   // Route::get('/', [ ContactsController::class, 'create'])->name('client.contact_us');
-
+  Route::get('/',  [ContactsController::class, 'create_public']);
   Route::post('/',  [ContactsController::class, 'register'])->name('client.contact_us');
 });
 
 Route::post('/subscription',  [SubscriptorsController::class, 'subscribe'])->name('client.subscription');
 
 
+
 Route::get('/test', function () {
 
-
-  Mail::to('stoledo@upload.com.py')
-    ->send(new NotifyNewSubscriptor(Subscriptor::first()));
+  Artisan::call("storage:link");
+ 
+// dd(         new NotifyNewContact( Contact::first() ) );
 });
 
 
@@ -81,11 +115,11 @@ Route::prefix('perfil')->middleware(['auth'])->group(function () {
 
   Route::post('/', function (Request $request) {
 
-    $request->validate( [
-      'email'=>'required|email',
-      'name'=> 'required|max:255',
-      'password'=>'required_with:change_password|confirmed'
-    ]) ;
+    $request->validate([
+      'email' => 'required|email',
+      'name' => 'required|max:255',
+      'password' => 'required_with:change_password|confirmed'
+    ]);
 
     $user = request()->user();
 
@@ -101,7 +135,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
   Route::get('/dashboard', function () {
 
-    $lots= Lote::count();
+    $lots = Lote::count();
     $categories = Category::count();
     return view('admin.welcome', compact('lots', 'categories'));
   })->name('dashboard');
@@ -130,6 +164,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/',  [CategoriasController::class, 'index'])->name('categorias');
     Route::get('/crear',  [CategoriasController::class, 'create']);
+    Route::post('/',  [CategoriasController::class, 'store']);
     Route::get('/editar/{category}',  [CategoriasController::class, 'edit']);
     Route::put('/{category}',  [CategoriasController::class, 'update']);
 

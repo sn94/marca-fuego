@@ -12,7 +12,7 @@ $publicLogo = public_path('image/logo.png');
 $filelogo = file_get_contents( $publicLogo );
 $b64 = base64_encode( $filelogo);
 ?>
-<img style=" display: block ;margin: 0 auto; width: 200px; height: auto;" src="<?php echo e('data:image/png;base64,'.$b64); ?>" alt="">
+<img style=" display: block ;margin: 0 auto; width: 300px; height: auto;" src="<?php echo e('data:image/png;base64,'.$b64); ?>" alt="">
 
 
 <?php echo e($slot); ?>

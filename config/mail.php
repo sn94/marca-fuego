@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => 'smtp2',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,6 +45,16 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
+        'smtp2' => [
+            'transport' => 'smtp',
+            'host' => 'mail.marcafuego.com.py',
+            'port' => 465,
+            'encryption' => 'ssl',
+            'username' => "notificaciones@marcafuego.com.py",
+            'password' => 'mVcQB@jj6&m{',
+            'timeout' => null,
+          //  'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        ],
         'ses' => [
             'transport' => 'ses',
         ],

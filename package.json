@@ -17,6 +17,8 @@
         "vite": "^2.9.11"
     },
     "dependencies": {
+        "animate.css": "^4.1.1",
+        "canvas-confetti": "^1.5.1",
         "dropzone": "^6.0.0-beta.2",
         "jquery": "^3.6.0"
     }

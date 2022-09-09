@@ -8,9 +8,12 @@ export default defineConfig({
             'resources/css/app.css',
             'resources/js/app.js',
 
+            'resources/css/animate.css',
 
             'resources/css/dropzone.css',
             'resources/js/dropzone.js',
+
+            'resources/js/confetti.js',
 
 
  
