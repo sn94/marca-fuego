@@ -206,7 +206,7 @@
 
 <?php endif; ?>
 
-<form id="CONTACT-FORM" class="main_form" action="<?php echo e(route('client.contact_us') .'#CONTACT-FORM'); ?>" method="POST">
+<form id="CONTACT-FORM" class="main_form" action="<?php echo e(route('client.contact_us') ); ?>" method="POST">
 
    <?php echo csrf_field(); ?>
 

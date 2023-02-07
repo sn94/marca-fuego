@@ -206,7 +206,7 @@
 
 @endif
 
-<form id="CONTACT-FORM" class="main_form" action="{{route('client.contact_us') .'#CONTACT-FORM'}}" method="POST">
+<form id="CONTACT-FORM" class="main_form" action="{{route('client.contact_us') }}" method="POST">
 
    @csrf
 

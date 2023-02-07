@@ -1,4 +1,4 @@
-<form autocomplete="off" id="CONTACT-FORM" class="main_form" action="{{route('client.contact_us') .'#CONTACT-FORM'}}" method="POST" style="position: relative;">
+<form autocomplete="off" id="CONTACT-FORM" class="main_form" action="{{route('client.contact_us') }}" method="POST" style="position: relative;">
 
     @csrf
 

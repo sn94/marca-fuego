@@ -31,11 +31,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
-  
-  return view('client.pages.PrimerContacto.Welcome_desktop');
-})->name('hello');
+Route::get('/', [ ContactsController::class, 'create_public'] )->name('hello');
 
 
 
@@ -60,11 +56,14 @@ Route::middleware('registered_guest')->group(function(){
   
   
   Route::get('/categorias/{category}', function (Category $category) {
-    $lotes = $category->lots->filter(
+    $lotes =Lote::where('category_id', $category->id)->get() ;
+   
+   
+    /*->filter(
       function ($lot) {
         return $lot->video_url || $lot->front_photo_url;
       }
-    );
+    );*/
     return view('client.lots_by_category', compact('lotes', 'category'));
   });
   
@@ -98,8 +97,7 @@ Route::post('/subscription',  [SubscriptorsController::class, 'subscribe'])->nam
 
 
 Route::get('/test', function () {
-
-  Artisan::call("storage:link");
+ return redirect()->route('home')->with('success_toast',  "Bienvenida Sonia Toledo");
  
 // dd(         new NotifyNewContact( Contact::first() ) );
 });
@@ -128,6 +126,8 @@ Route::prefix('perfil')->middleware(['auth'])->group(function () {
       $data['[password'] =  Hash::make($request->password);
     }
     $user->fill($data);
+    $user->save();
+    return redirect()->route('perfil')->with('success', 'PERFIL ACTUALIZADO');
   });
 });
 

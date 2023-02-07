@@ -282,13 +282,14 @@
         margin-top: -38px;
     }
     .navigation .navbar-collapse {
-        background: #000;
+        background: #13110ec4;
         padding: 20px;
-        margin-top: 69px;
+        margin-top: 120px;
         position: absolute;
         width: 100%;
         margin-right: 20px;
         z-index: 999;
+        backdrop-filter: blur(5px);
     }
     .navigation.navbar-dark .navbar-nav .nav-link {
         padding: 10px 0;
@@ -304,4 +305,3 @@
         background-repeat: no-repeat;
     }
 }
-

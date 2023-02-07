@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
 
 
         Contact::factory( 50 )->create();
+        
         Lote::factory(30)->create();
 
 

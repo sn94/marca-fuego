@@ -58,6 +58,7 @@ class CategoriasController extends Controller
         if ($request->hasFile('image')) {
 
           try{
+            if(  $category->image)
             Storage::delete($category->image);
           }catch(Exception $e){
 

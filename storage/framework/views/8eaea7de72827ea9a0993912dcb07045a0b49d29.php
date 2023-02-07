@@ -39,6 +39,12 @@
 
 
    <script src="<?php echo e(asset('main_web_template/js/jquery.min.js')); ?>"></script>
+   <!--toaster-->
+
+
+   <script src="<?php echo e(asset('js/toast.min.js')); ?>"></script>
+
+
    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/animate.css' ]); ?>
 
    <link rel="stylesheet" href="<?php echo e(asset('css/palette.css')); ?>">
@@ -53,7 +59,7 @@
 
    <!-- Responsive-->
 
-   <link rel="stylesheet" href="<?php echo e(asset('main_web_template/css/responsive.css')); ?>">
+   <link rel="stylesheet" href="<?php echo e(asset('main_web_template/css/responsive.css') . '?v=' . date('His')); ?>">
 
    <!-- fevicon -->
 
@@ -78,7 +84,6 @@
 
 
    <style>
-
       .product_box {
 
          position: relative;
@@ -104,7 +109,6 @@
          text-shadow: 1px 1px 3px black, 2px 2px 3px gray;
 
          z-index: 1
-
       }
 
 
@@ -172,77 +176,86 @@
          z-index: -1;
 
       }
-
    </style>
 
-<style>
-   
-/* Element | http://127.0.0.1:8000/home */
-.whatsappFloatingTip{
-   position: fixed;
-   bottom: calc( 10% + 100px );
-   right: 5%;
-   transition: all 1s ease;
-   overflow: visible;
-   z-index: 5;
-}
- 
+   <style>
+      /* Element | http://127.0.0.1:8000/home */
+      .whatsappFloatingTip {
+         position: fixed;
+         bottom: calc(10% + 100px);
+         right: 5%;
+         transition: all 1s ease;
+         overflow: visible;
+         z-index: 5;
+      }
 
-.whatsappFloatingTip::before {
-   position: absolute;
-   content: '';
-   top: 100% ;
-   right: 0;
-  
-  width: 0;
-  height: 0;
-  z-index: 5; 
-  border-right: 15px var(--primary) solid;
-  border-top: 15px solid var(--primary);
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid transparent;
-  width: 30px;
-  background: transparent;
-}
 
+      .whatsappFloatingTip::before {
+         position: absolute;
+         content: '';
+         top: 100%;
+         right: 0;
+
+         width: 0;
+         height: 0;
+         z-index: 5;
+         border-right: 15px var(--primary) solid;
+         border-top: 15px solid var(--primary);
+         border-bottom: 15px solid transparent;
+         border-left: 15px solid transparent;
+         width: 30px;
+         background: transparent;
+      }
 
 
 
 
 
-.whatsappFloating:hover + .whatsappFloatingTip{
-   display: block;
-}
-.whatsappFloating + .whatsappFloatingTip{
- display: none;
-  overflow: visible;
-}
-.whatsappFloating  i.fa-whatsapp {
-  font-size: 4em;
-  color: #ffffff;
-}
 
-/* style.css | http://127.0.0.1:8000/main_web_template/css/style.css?v=172705 */
+      .whatsappFloating:hover+.whatsappFloatingTip {
+         display: block;
+      }
 
-.whatsappFloating { 
-  display: block;
-  padding: 15px;
-  background-color: #4bc429;
-  position: fixed;
-  right: 5%;
-  bottom: 10%;
-  border-radius: 100%;
-  box-shadow: 0 0 10px #226909;
-  z-index: 5 !important;
-}
+      .whatsappFloating+.whatsappFloatingTip {
+         display: none;
+         overflow: visible;
+      }
 
-</style>
+      .whatsappFloating i.fa-whatsapp {
+         font-size: 4em;
+         color: #ffffff;
+      }
 
-<script>
+      /* style.css | http://127.0.0.1:8000/main_web_template/css/style.css?v=172705 */
 
- 
+      .whatsappFloating {
+         display: block;
+         padding: 15px;
+         background-color: #4bc429;
+         position: fixed;
+         right: 5%;
+         bottom: 10%;
+         border-radius: 100%;
+         box-shadow: 0 0 10px #226909;
+         z-index: 5 !important;
+      }
 
-</script>
+
+      @media  only screen and (max-width: 600px) {
+
+         .navbar-toggler {
+            position: absolute !important;
+            left: 20px;
+            top: 50px !important;
+         }
+      }
+   </style>
+
+   <script>
+
+
+
+   </script>
 
    <?php echo $__env->yieldPushContent('css'); ?>
 
@@ -254,7 +267,7 @@
 
 
 
-<body class="main-layout">
+<body class="main-layout"  >
 
    <!-- loader  -->
 
@@ -268,7 +281,7 @@
 
    <!-- header -->
 
-  <?php echo $__env->make('client.layouts.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+   <?php echo $__env->make('client.layouts.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
    <!-- end header inner -->
 
@@ -276,47 +289,77 @@
 
    <!-- banner -->
 
+   <?php if(session()->has('success_toast')): ?>
+
+   <script>
+      const options = {
+      settings: {
+        duration: 3500,
+      },
+
+      style: {
+        main: {
+          background: "#f3a90a",
+          color: "rgb(136, 39, 1)",
+        fontSize: "max(4vw, 1em)",
+     fontWeight: "bolder",
+        borderRadius:"20px",
+        bottom: "30vh"
+      },
+   }
+
+};
+
+setTimeout( ()=>{
+   iqwerty.toast.toast('😊<?= session('success_toast') ?>',  options);
+}, 2800)
+    
+   </script>
+
+
+   <?php endif; ?>
    <?php if(session()->has('success')): ?>
 
-				<div class="alert alert-info" role="alert">
+   <div class="alert alert-info" role="alert">
 
 
 
-					<?php $__currentLoopData = explode("\n", session('success')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $msg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php $__currentLoopData = explode("\n", session('success')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $msg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-					<h3> <?php echo e($msg); ?></h3>
+      <h3> <?php echo e($msg); ?></h3>
 
-					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-				</div>
+   </div>
 
-				<?php endif; ?>
-
-
+   <?php endif; ?>
 
 
 
-				<?php if(session()->has('error')): ?>
-
-				<div class="alert alert-danger" role="alert">
-
-					<h3><?php echo e(session('error')); ?></h3>
-
-				</div>
-
-				<?php endif; ?>
 
 
+   <?php if(session()->has('error')): ?>
 
-            
+   <div class="alert alert-danger" role="alert">
 
-   <?php echo $__env->yieldContent('content'); ?>
+      <h3><?php echo e(session('error')); ?></h3>
+
+   </div>
+
+   <?php endif; ?>
+
+
+
 
  
+ <?php echo $__env->yieldContent('content'); ?>
+  
+
+
 
    <!--  footer -->
 
-  <?php echo $__env->make('client.layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+   <?php echo $__env->make('client.layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
    <!-- end footer -->
 

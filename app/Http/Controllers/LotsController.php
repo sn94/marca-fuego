@@ -13,7 +13,7 @@ class LotsController extends Controller
     public  function index()
     {
 
-        $lots = Lote::paginate(6);
+        $lots = Lote::where('draft', false)->paginate(6);
         return view('admin.lots.index', compact('lots'));
     }
 

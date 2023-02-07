@@ -39,6 +39,12 @@
 
 
    <script src="{{asset('main_web_template/js/jquery.min.js')}}"></script>
+   <!--toaster-->
+
+
+   <script src="{{asset('js/toast.min.js')}}"></script>
+
+
    @vite(['resources/css/animate.css' ])
 
    <link rel="stylesheet" href="{{asset('css/palette.css')}}">
@@ -53,7 +59,7 @@
 
    <!-- Responsive-->
 
-   <link rel="stylesheet" href="{{asset('main_web_template/css/responsive.css')}}">
+   <link rel="stylesheet" href="{{asset('main_web_template/css/responsive.css') . '?v=' . date('His')}}">
 
    <!-- fevicon -->
 
@@ -78,7 +84,6 @@
 
 
    <style>
-
       .product_box {
 
          position: relative;
@@ -104,7 +109,6 @@
          text-shadow: 1px 1px 3px black, 2px 2px 3px gray;
 
          z-index: 1
-
       }
 
 
@@ -172,77 +176,86 @@
          z-index: -1;
 
       }
-
    </style>
 
-<style>
-   
-/* Element | http://127.0.0.1:8000/home */
-.whatsappFloatingTip{
-   position: fixed;
-   bottom: calc( 10% + 100px );
-   right: 5%;
-   transition: all 1s ease;
-   overflow: visible;
-   z-index: 5;
-}
- 
+   <style>
+      /* Element | http://127.0.0.1:8000/home */
+      .whatsappFloatingTip {
+         position: fixed;
+         bottom: calc(10% + 100px);
+         right: 5%;
+         transition: all 1s ease;
+         overflow: visible;
+         z-index: 5;
+      }
 
-.whatsappFloatingTip::before {
-   position: absolute;
-   content: '';
-   top: 100% ;
-   right: 0;
-  
-  width: 0;
-  height: 0;
-  z-index: 5; 
-  border-right: 15px var(--primary) solid;
-  border-top: 15px solid var(--primary);
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid transparent;
-  width: 30px;
-  background: transparent;
-}
 
+      .whatsappFloatingTip::before {
+         position: absolute;
+         content: '';
+         top: 100%;
+         right: 0;
+
+         width: 0;
+         height: 0;
+         z-index: 5;
+         border-right: 15px var(--primary) solid;
+         border-top: 15px solid var(--primary);
+         border-bottom: 15px solid transparent;
+         border-left: 15px solid transparent;
+         width: 30px;
+         background: transparent;
+      }
 
 
 
 
 
-.whatsappFloating:hover + .whatsappFloatingTip{
-   display: block;
-}
-.whatsappFloating + .whatsappFloatingTip{
- display: none;
-  overflow: visible;
-}
-.whatsappFloating  i.fa-whatsapp {
-  font-size: 4em;
-  color: #ffffff;
-}
 
-/* style.css | http://127.0.0.1:8000/main_web_template/css/style.css?v=172705 */
+      .whatsappFloating:hover+.whatsappFloatingTip {
+         display: block;
+      }
 
-.whatsappFloating { 
-  display: block;
-  padding: 15px;
-  background-color: #4bc429;
-  position: fixed;
-  right: 5%;
-  bottom: 10%;
-  border-radius: 100%;
-  box-shadow: 0 0 10px #226909;
-  z-index: 5 !important;
-}
+      .whatsappFloating+.whatsappFloatingTip {
+         display: none;
+         overflow: visible;
+      }
 
-</style>
+      .whatsappFloating i.fa-whatsapp {
+         font-size: 4em;
+         color: #ffffff;
+      }
 
-<script>
+      /* style.css | http://127.0.0.1:8000/main_web_template/css/style.css?v=172705 */
 
- 
+      .whatsappFloating {
+         display: block;
+         padding: 15px;
+         background-color: #4bc429;
+         position: fixed;
+         right: 5%;
+         bottom: 10%;
+         border-radius: 100%;
+         box-shadow: 0 0 10px #226909;
+         z-index: 5 !important;
+      }
 
-</script>
+
+      @media only screen and (max-width: 600px) {
+
+         .navbar-toggler {
+            position: absolute !important;
+            left: 20px;
+            top: 50px !important;
+         }
+      }
+   </style>
+
+   <script>
+
+
+
+   </script>
 
    @stack('css')
 
@@ -254,7 +267,7 @@
 
 
 
-<body class="main-layout">
+<body class="main-layout"  >
 
    <!-- loader  -->
 
@@ -268,7 +281,7 @@
 
    <!-- header -->
 
-  @include('client.layouts.navbar')
+   @include('client.layouts.navbar')
 
    <!-- end header inner -->
 
@@ -276,47 +289,77 @@
 
    <!-- banner -->
 
+   @if (session()->has('success_toast'))
+
+   <script>
+      const options = {
+      settings: {
+        duration: 3500,
+      },
+
+      style: {
+        main: {
+          background: "#f3a90a",
+          color: "rgb(136, 39, 1)",
+        fontSize: "max(4vw, 1em)",
+     fontWeight: "bolder",
+        borderRadius:"20px",
+        bottom: "30vh"
+      },
+   }
+
+};
+
+setTimeout( ()=>{
+   iqwerty.toast.toast('😊<?= session('success_toast') ?>',  options);
+}, 2800)
+    
+   </script>
+
+
+   @endif
    @if (session()->has('success'))
 
-				<div class="alert alert-info" role="alert">
+   <div class="alert alert-info" role="alert">
 
 
 
-					@foreach (explode("\n", session('success')) as $msg )
+      @foreach (explode("\n", session('success')) as $msg )
 
-					<h3> {{ $msg }}</h3>
+      <h3> {{ $msg }}</h3>
 
-					@endforeach
+      @endforeach
 
-				</div>
+   </div>
 
-				@endif
-
-
+   @endif
 
 
 
-				@if (session()->has('error'))
-
-				<div class="alert alert-danger" role="alert">
-
-					<h3>{{ session('error')}}</h3>
-
-				</div>
-
-				@endif
 
 
+   @if (session()->has('error'))
 
-            
+   <div class="alert alert-danger" role="alert">
 
-   @yield('content')
+      <h3>{{ session('error')}}</h3>
+
+   </div>
+
+   @endif
+
+
+
 
  
+ @yield('content')
+  
+
+
 
    <!--  footer -->
 
-  @include('client.layouts.footer')
+   @include('client.layouts.footer')
 
    <!-- end footer -->
 

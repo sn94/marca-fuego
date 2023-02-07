@@ -30,10 +30,10 @@ class ContactRequest extends FormRequest
         ];
         else
         return [
-            'fullname' => 'required|string|max:255',
+           // 'fullname' => 'required|string|max:255',
             'phone' => 'required_without:email|max:255',
             'email' => 'required_without:phone|email',
-            'message' => 'required'
+          //  'message' => 'required'
         ];
     }
 

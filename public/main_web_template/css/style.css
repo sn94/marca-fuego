@@ -300,15 +300,6 @@ ul.btn li:last-child {
 }
 
 
-/*-- header area --*/
-
-
-/*--------------------------------------------------------------------- top banner area ---------------------------------------------------------------------*/
-
-
-/*--------------------------------------------------------------------- layout new css ---------------------------------------------------------------------*/
-
-
 /*-- navigation--*/
 
 .navigation.navbar {
@@ -368,40 +359,23 @@ ul.btn li:last-child {
 .header {
     width: 100%;
     padding: 30px 30px;
-    border-bottom: #c6cad5 solid 12px;
-    background-color: #13110e;
+    /*  border-bottom: #c6cad5 solid 12px;*/
+    background: #13110ea8;
+    backdrop-filter: blur(5px);
+    position: absolute;
+    z-index: 3;
+    height: min(35vh, 120px);
 }
 
 .logo {
-    position: relative;
-    padding-left: 50%;
-    padding-top: 6px;
-}
-
-.logo::after {
+    padding: 0;
     position: absolute;
-    content: "";
-    width: 136px;
-    height: 110px;
-    left: -45px;
-    top: -30px;
-    background: url(../images/top_head.png);
-    background-repeat: no-repeat;
-    border-right: #c6cad5 solid 15px;
+    top: -20px;
+    left: 0;
 }
 
-
-/** banner section **/
-
-.banner_main {
-    background: url(../images/banner.jpg);
-    background-repeat: no-repeat;
-    min-height: 840px;
-    background-size: 100% 100%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+.logo img {
+    width: max( 16vw, 200px);
 }
 
 .text-bg {

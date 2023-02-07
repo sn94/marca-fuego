@@ -7,6 +7,7 @@ use App\Actions\NotifyNewSubscriptor as ActionsNotifyNewSubscriptor;
 use App\Http\Requests\ContactRequest;
 use App\Mail\NotifyNewContact;
 use App\Mail\NotifyNewSubscriptor;
+use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Subscriptor;
 use App\Models\User;
@@ -59,17 +60,20 @@ class ContactsController extends Controller
     public function create_public()
     {
 
-        return view('client.pages.PrimerContacto.Welcome_desktop');
+        $categories = Category::limit(3)->get();
+
+        return view('client.pages.PrimerContacto.Welcome', compact('categories'));
     }
 
     public function register(ContactRequest $request)
     {
         $contact = Contact::where('email', $request->email)->first();
- 
-        if ($request->switch == 'registered') {
 
-          
-            if ( ! $contact)
+
+        if ($contact) { //existe
+
+
+            /* if ( ! $contact)
             return redirect()->route('hello')->with('error', 'ESTE EMAIL AUN NO HA SIDO REGISTRADO');
              else {  
                 if ($request->has('subscription')) {
@@ -85,11 +89,16 @@ class ContactsController extends Controller
                     new  ActionsNotifyNewSubscriptor($newsubscriptor);
                  
                 } 
-                return redirect(route('home')  )->with('success', '¡Hola '.( $contact->fullname) .'!');
+                $saludo = (  date("H:i") >= "06:00"  &&  date("H:i") <= "12:00") ? 'Buenos días' :
+                 ( (  date("H:i") > "12:00"  &&  date("H:i")<= "18:00") ? 'Buenas tardes'  : 'Buenas noches' );
+                 
+                return redirect(route('home')  )->with('success_toast', '¡' .$saludo.' '.( $contact->fullname) .'!');
                 
-            }
+            }*/
 
-          
+            $saludo = (date("H:i") >= "06:00"  &&  date("H:i") <= "12:00") ? 'Buenos días' : ((date("H:i") > "12:00"  &&  date("H:i") <= "18:00") ? 'Buenas tardes'  : 'Buenas noches');
+
+            return redirect(route('home'))->with('success_toast', '¡' . $saludo . '!');
         } else {
             $newcontact =   Contact::create($request->input());
             //send email
@@ -99,7 +108,7 @@ class ContactsController extends Controller
 
         $request->session()->put('guest_email', $request->email);
 
-        return redirect(route('home') . '#header')->with('success', '¡GRACIAS POR TU INTERÉS!');
+        return redirect(route('home'))->with('success_toast', '¡GRACIAS POR TU INTERÉS!');
     }
 
 

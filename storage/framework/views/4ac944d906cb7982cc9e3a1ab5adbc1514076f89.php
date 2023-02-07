@@ -1,4 +1,4 @@
-<form autocomplete="off" id="CONTACT-FORM" class="main_form" style="position:relative;" action="<?php echo e(route('client.contact_us') .'#CONTACT-FORM'); ?>" method="POST">
+<form autocomplete="off" id="CONTACT-FORM" class="main_form" style="position:relative;" action="<?php echo e(route('client.contact_us')); ?>" method="POST">
 
     <?php echo csrf_field(); ?>
 

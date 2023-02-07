@@ -15,6 +15,14 @@ export default defineConfig({
 
             'resources/js/confetti.js',
 
+            'resources/css/materialize.css',
+            'resources/js/materialize.js',
+
+            'resources/css/bootstrapcss.css',
+            'resources/js/bootstrapcss.js',
+
+            'resources/css/videojs.css',
+            'resources/js/videojs.js',
 
  
         ]),

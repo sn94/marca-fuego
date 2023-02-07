@@ -1,6 +1,48 @@
 @extends('client.layouts.app')
 
+@vite(['resources/css/videojs.css' , 'resources/js/videojs.js' ] )
 
+
+@push('js')
+
+
+
+<script>
+    //inicializar
+
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+
+
+        let videos = Array.from(
+            document.querySelectorAll("video.vjs-tech")
+        ).map(
+            v => {
+
+
+
+                return ({
+                    id: v.id,
+                    source: v.src
+                });
+            } //end handler
+
+        )
+
+
+        videos.forEach(
+
+            V => {
+                videojs(V.id)
+                    .src(V.source);
+
+            }
+        )
+
+    });
+</script>
+
+@endpush
 
 @push('css')
 
@@ -12,6 +54,7 @@
         background: #f3a90a;
         position: relative;
         overflow: hidden;
+        width: 640px !important;
     }
 
     .loteItemTitle::before {
@@ -23,6 +66,18 @@
         background: black;
         top: 0;
         left: 0;
+    }
+
+    figure{
+      
+        width: 640px !important;
+        height: 264px !important;
+    }
+    figure img.noVideo {
+
+        width: 640px !important;
+        height: 264px !important;
+        object-fit: cover;
     }
 </style>
 
@@ -128,7 +183,7 @@
 
 
 
-<div class="product">
+<div class="product" style="padding-top: min(35vh, 140px);min-height: 100vh;">
 
     <div class="container">
 
@@ -193,12 +248,17 @@ class="btn btn-outline-warning mt-0 " type="button">Ver detalles</button> -->
 
                         @if ($lot->video_url)
 
-                        <video src="{{$lot->video_url}}" style="width: 100%;height: auto;" controls="controls"></video>
+                        <video-js id="video_{{$lot->id}}" class="video-js" controls preload="auto" width="640" height="264" poster="{{$lot->category->image_url}}" data-setup="{}" src="{{$lot->video_url}}">
 
+                        </video-js>
 
                         @else
-                        <img src="{{$lot->front_photo_url}}" alt="" class="img-fluid">
+                        @if ($lot->front_photo_url)
+                        <img class="noVideo" src="{{$lot->front_photo_url}}" alt="" class="img-fluid">
+                        @else
+                        <img class="noVideo" src="{{$lot->category->image_url}}" alt="" class="img-fluid">
 
+                        @endif
                         @endif
 
 
@@ -234,13 +294,13 @@ class="btn btn-outline-warning mt-0 " type="button">Ver detalles</button> -->
 
                                     <th> Peso:</th>
 
-                                    <td>353 kg promedio</td>
+                                    <td>{{ $lot->weight}}</td>
 
 
 
                                     <th> Precio:</th>
 
-                                    <td> 12.500 g/kg, -4%, iva incluido</td>
+                                    <td> {{ $lot->price }}</td>
 
                                 </tr>
 
@@ -256,7 +316,7 @@ class="btn btn-outline-warning mt-0 " type="button">Ver detalles</button> -->
 
                                     <td> Comision: </td>
 
-                                    <td> {{$lot->comission}}</td>
+                                    <td> {{$lot->comission ?? '----'}}</td>
 
                                 </tr>
 

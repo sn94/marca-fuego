@@ -119,7 +119,7 @@ display: none;
 
         @media only screen and (min-width: 768px) {
             video {
-                object-fit: contain;
+                object-fit: cover;
             }
 
             #LoginLink{
@@ -155,27 +155,7 @@ z-index: 2;
 
 
 
-        .intro-title {
-
-            position: relative;
-
-            font-size: min(28px, 2.5em);
-
-            letter-spacing: 1.5px;
-
-            top: 20px;
-
-            z-index: 1;
-
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px black;
-
-
-        }
-
-
+   
 
 
 
@@ -415,65 +395,7 @@ z-index: 2;
 
                 <div id="MainTranslucid" class="container" style="background: #806f0bcc;">
 
-                    <h1 class="intro-title">Queremos conocerte</h1>
-
-                    <p class="text-light text-center mt-4  mb-2" style="font-size: 1.3em;">Elije una opción</p>
-                    <div class="row mt-1" style="position: relative;z-index: 2;">
-                        <div class="col-12 col-md-6">
-
-                            <label class="form-check-label text-light" for="registrado">
-                                <input onchange="updateForm(  )" class="d-none" type="radio" name="tipoformulario" value="registrado" id="registrado">
-                                <i class="fa fa-square-o text-light"></i>
-                                <i class="fa fa-check-square-o text-light"></i>
-                                Ya estoy registrado
-                            </label>
-                        </div>
-                        <div class="col-12 col-md-6">
-
-                            <label class="form-check-label text-light" for="no_registrado">
-                                <input onchange="updateForm(  )" class="d-none" type="radio" name="tipoformulario" value="no_registrado" id="no_registrado" checked>
-                                <i class="fa fa-square-o text-light"></i>
-                                <i class="fa fa-check-square-o text-light"></i>
-                                Quiero registrarme
-                            </label>
-                        </div>
-                    </div>
-              
-
-                    <img id='fireloading' style="height: 300px;margin: auto;width: 250px;opacity: .5;" class="d-none" src="{{asset('main_web_template/images/loading.gif')}}" alt="">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
-                    <div id="form">
-                        @include('client.pages.PrimerContacto.NoRegistradoForm')
-                    </div>
-                    <a href="https://api.whatsapp.com/send?phone=595%20982%20594052&text= Buenas, quisiera mas información sobre los lotes"
-                     class=" whatsapp text-light d-md-none d-block p-3" target="_blank">
-
-<i class="fa fa-whatsapp my-float"></i> 
-
-</a>
-                    @if (session()->has('error'))
-
-                    <div class="alert alert-danger" role="alert">
-
-                        <h4>{{ session('error')}}</h4>
-
-                    </div>
-
-                    @endif
-
-                    <a id="LoginLink"  href="{{route('login')}}"><i class="fa fa-user text-light"></i>
-                    <span class="d-inline d-md-none text-light pl-2">Acceso administrativo</span>
-                </a>
-
+                 @include("client.pages.PrimerContacto.Form")
                 </div>
 
             </div>
